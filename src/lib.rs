@@ -53,7 +53,7 @@ impl Terminal {
     ///
     /// open is an out-parameter indicating whether the window is (still) open.
     pub fn draw(&mut self, str_id: &imgui::ImStr, open: &mut bool) {
-        ffi::draw_term(self.inner.as_mut().unwrap(), str_id.to_string(), &mut *open)
+        ffi::draw_term(self.as_inner(), str_id.to_string(), &mut *open)
     }
     /// Write characters to the terminal.
     /// TODO: Is it correct to send rust utf8 slices like this?
