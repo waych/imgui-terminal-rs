@@ -31,7 +31,7 @@ mod ffi {
     }
 }
 
-struct Terminal {
+pub struct Terminal {
     inner: cxx::UniquePtr<ffi::Terminal>,
 }
 impl Terminal {
