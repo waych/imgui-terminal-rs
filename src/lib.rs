@@ -27,7 +27,7 @@ mod ffi {
         fn reset(self: Pin<&mut Terminal>);
         fn draw_term(terminal: Pin<&mut Terminal>, str_id: String, p_open: &mut bool);
         fn write_term(terminal: Pin<&mut Terminal>, bytes: &str);
-        fn read_term(terminal: Pin<&mut Terminal>, bytes: &mut[u8]) -> i32;
+        fn read_term(terminal: Pin<&mut Terminal>, bytes: &mut [u8]) -> i32;
     }
 }
 
