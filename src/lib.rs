@@ -25,7 +25,7 @@ mod ffi {
         // Functions implemented in C++.
         fn new_terminal() -> UniquePtr<Terminal>;
         fn reset(self: Pin<&mut Terminal>);
-        fn draw_term(terminal: Pin<&mut Terminal>, str_id: String, p_open: &mut bool);
+        fn draw_term(terminal: Pin<&mut Terminal>, str_id: String);
         fn write_term(terminal: Pin<&mut Terminal>, bytes: &str);
         fn read_term(terminal: Pin<&mut Terminal>, bytes: &mut [u8]) -> i32;
     }
@@ -52,8 +52,8 @@ impl Terminal {
     /// Draw the terminal window.
     ///
     /// open is an out-parameter indicating whether the window is (still) open.
-    pub fn draw(&mut self, str_id: &imgui::ImStr, open: &mut bool) {
-        ffi::draw_term(self.as_inner(), str_id.to_string(), &mut *open)
+    pub fn draw(&mut self, str_id: &imgui::ImStr) {
+        ffi::draw_term(self.as_inner(), str_id.to_string())
     }
     /// Write characters to the terminal.
     /// TODO: Is it correct to send rust utf8 slices like this?

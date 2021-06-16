@@ -10,8 +10,8 @@ std::unique_ptr<Terminal> new_terminal() {
 //
 // TODO: Fix this to not require a rust::String to be passed in once imgui-rs
 // figures out what replaces im_str!().
-void draw_term(Terminal &terminal, rust::String str_id, bool &p_open) {
-  terminal.draw(str_id.c_str(), &p_open);
+void draw_term(Terminal &terminal, rust::String str_id) {
+  terminal.draw(str_id.c_str());
 }
 
 // Write bytes into the terminal.
