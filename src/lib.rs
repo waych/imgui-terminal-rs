@@ -34,13 +34,14 @@ mod ffi {
 pub struct Terminal {
     inner: cxx::UniquePtr<ffi::Terminal>,
 }
+#[allow(unused_unsafe)] // Required due to CXX complaints from rust-analyzer.
 impl Terminal {
     pub fn new() -> Option<Self> {
-        let inner = ffi::new_terminal();
+        let inner = unsafe { ffi::new_terminal() };
         if inner.is_null() {
             return None;
         }
-        Some(Self { inner: ffi::new_terminal() })
+        Some(Self { inner })
     }
     pub fn as_inner(&mut self) -> std::pin::Pin<&mut ffi::Terminal> {
         self.inner.pin_mut()
@@ -53,16 +54,16 @@ impl Terminal {
     ///
     /// open is an out-parameter indicating whether the window is (still) open.
     pub fn draw(&mut self, str_id: &imgui::ImStr) {
-        ffi::draw_term(self.as_inner(), str_id.to_string())
+        unsafe { ffi::draw_term(self.as_inner(), str_id.to_string()) }
     }
     /// Write characters to the terminal.
     /// TODO: Is it correct to send rust utf8 slices like this?
     pub fn write(&mut self, bytes: &str) {
-        ffi::write_term(self.as_inner(), bytes)
+        unsafe { ffi::write_term(self.as_inner(), bytes) }
     }
 
     pub fn read(&mut self, buffer: &mut [u8]) -> i32 {
-        ffi::read_term(self.as_inner(), buffer)
+        unsafe { ffi::read_term(self.as_inner(), buffer) }
     }
 }
 
